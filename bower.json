@@ -1,0 +1,16 @@
+{
+  "name": "config modifier",
+  "version": "0.0.1",
+  "authors": [
+    "Roy Cheng <roy.b.cheng@newegg.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
