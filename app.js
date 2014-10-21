@@ -19,15 +19,34 @@ app.get('/api/configs', function(req, res) {
   }});
 });
 
-app.get('/api/nodes', function(req, res) {
-  res.json(['node1', 'node2', 'node3']);
-});
+var Zookeeper = require('zookeeper');
 
-app.get('/api/nodes/node1', function(req, res) {
-  res.json({
-    cversion: -1,
-    dataVersion: 0,
-    aclVersion: 0
+app.get('/:api*', function(req, res) {
+  var path = req.param(0);
+
+  if (path.length === 0) {
+    res.json({err: 'path is empty'});
+    res.status(400).end();
+    return;
+  }
+
+  var zk = new Zookeeper({
+    connect: 'localhost:2181',
+    timeout: 2000
+  });
+
+ zk.connect(function(err) {
+    if (err) throw err;
+    zk.a_get_children2(path, null, function(rc, error, children, stat) {
+      res.json({
+        children: children,
+        stat: stat,
+        error: error,
+        rc: rc
+      });
+      res.status(200).end();
+      zk.close();
+    });
   });
 });
 
