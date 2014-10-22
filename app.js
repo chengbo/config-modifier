@@ -21,7 +21,7 @@ app.get('/api/configs', function(req, res) {
 
 var Zookeeper = require('zookeeper');
 
-app.get('/:api*', function(req, res) {
+app.get('/:api/*', function(req, res) {
   var path = req.param(0);
 
   if (path.length === 0) {
@@ -37,7 +37,7 @@ app.get('/:api*', function(req, res) {
 
  zk.connect(function(err) {
     if (err) throw err;
-    zk.a_get_children2(path, null, function(rc, error, children, stat) {
+    zk.a_get_children2('/' + path, null, function(rc, error, children, stat) {
       res.json({
         children: children,
         stat: stat,
