@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var Promise = require('bluebird');
 
 var cons = require('consolidate');
 
@@ -36,18 +37,35 @@ app.get('/api/*', function(req, res) {
     timeout: 2000
   });
 
- zk.connect(function(err) {
-    if (err) throw err;
-    zk.a_get_children2('/' + path, null, function(rc, error, children, stat) {
+  function connectAsync() {
+    return new Promise(function(resolve, reject) {
+      zk.connect(function(err) {
+        if (err) return reject(err);
+        resolve();
+      });
+    });
+  }
+
+  function getChildren2Async() {
+    return new Promise(function(resolve, reject) {
+      zk.a_get_children2('/' + path, null, function(rc, error, children, stat) {
+        resolve({
+          children: children,
+          stat: stat
+        });
+      });
+    });
+  }
+
+  connectAsync().then(
+    getChildren2Async
+  ).then(function(data) {
       res.json({
-        children: children,
-        stat: stat,
-        error: error,
-        rc: rc
+        children: data.children,
+        stat: data.stat
       });
       res.status(200).end();
       zk.close();
-    });
   });
 });
 
