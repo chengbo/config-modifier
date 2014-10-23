@@ -9,12 +9,6 @@ app.set('view engine', 'hbs');
 
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
-var url = require('./url.js');
-
-app.get('/', function(req, res) {
-  res.render('index', {title: 'welcome to config modifier'});
-});
-
 app.get('/api/configs', function(req, res) {
   res.json({
     config: {
@@ -25,6 +19,7 @@ app.get('/api/configs', function(req, res) {
 
 var Zookeeper = require('zookeeper');
 
+var url = require('./url.js');
 app.get('/api/*', function(req, res) {
   var path = req.param(0);
 
@@ -53,6 +48,19 @@ app.get('/api/*', function(req, res) {
       res.status(200).end();
       zk.close();
     });
+  });
+});
+
+app.get('/*', function(req, res) {
+  var path = req.param(0);
+  if (path.length === 0) {
+    path = '/';
+  }
+
+  path = url.escape(path);
+  res.render('index', {
+    title: 'welcome to config modifier',
+    path: path
   });
 });
 
