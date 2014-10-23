@@ -49,10 +49,18 @@ app.get('/api/*', function(req, res) {
   function getChildren2Async() {
     return new Promise(function(resolve, reject) {
       zk.a_get_children2('/' + path, null, function(rc, error, children, stat) {
-        resolve({
-          children: children,
-          stat: stat
-        });
+        if (rc === -101) {
+          reject({
+            code: rc,
+            error: error
+          });
+        }
+        else {
+          resolve({
+            children: children,
+            stat: stat
+          });
+        }
       });
     });
   }
@@ -66,6 +74,8 @@ app.get('/api/*', function(req, res) {
       });
       res.status(200).end();
       zk.close();
+  }).catch(function(err) {
+    res.status(404).json(err);
   });
 });
 
