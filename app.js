@@ -7,6 +7,10 @@ app.engine('hbs', cons.handlebars);
 
 app.set('view engine', 'hbs');
 
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+var url = require('./url.js');
+
 app.get('/', function(req, res) {
   res.render('index', {title: 'welcome to config modifier'});
 });
@@ -30,7 +34,7 @@ app.get('/:api/*', function(req, res) {
     return;
   }
 
-  path = path.match(/([^\/]+)/g).join('/');
+  path = url.escape(path);
 
   var zk = new Zookeeper({
     connect: 'localhost:2181',
