@@ -25,7 +25,7 @@ app.get('/api/configs', function(req, res) {
 
 var Zookeeper = require('zookeeper');
 
-app.get('/:api/*', function(req, res) {
+app.get('/api/*', function(req, res) {
   var path = req.param(0);
 
   if (path.length === 0) {
