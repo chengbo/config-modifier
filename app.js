@@ -30,6 +30,8 @@ app.get('/:api/*', function(req, res) {
     return;
   }
 
+  path = path.match(/([^\/]+)/g).join('/');
+
   var zk = new Zookeeper({
     connect: 'localhost:2181',
     timeout: 2000
