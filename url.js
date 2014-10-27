@@ -1,3 +1,5 @@
 exports.escape = function(input) {
-  return input.match(/([^\/]+)/g).join('/');
+  var matches = input.match(/([^\/]+)/g);
+  if (matches === null) return '';
+  return matches.join('/');
 };
