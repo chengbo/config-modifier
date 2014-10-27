@@ -51,10 +51,21 @@ app.get('/*', function(req, res) {
   }
 
   path = url.escape(path);
-  res.render('index', {
-    title: 'welcome to config modifier',
-    path: path
-  });
+
+  new zr().get('/' + path)
+    .then(function(result) {
+      res.render('index', {
+        title: 'welcome to config modifier',
+        children: result.children,
+        stat: result.stat,
+        data: result.data
+      });
+    })
+    .catch(function(err) {
+      res.status(404).render('index', {
+        title: 'not found'
+      });
+    });
 });
 
 var server = app.listen(8080, function() {

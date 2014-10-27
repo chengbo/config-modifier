@@ -5,4 +5,16 @@
   <body>
     Hi there, welcome to config modifier.
   <body>
+        <h1>{{title}}</h1>
+          <ul>
+          {{#each children}}
+            <li><a href="{{this}}">{{this}}</a></li>
+          {{/each}}
+          </ul>
+
+          value: {{data}}
+        </div>
+      </div>
+
+  </body>
 </html>
