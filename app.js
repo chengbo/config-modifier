@@ -1,6 +1,6 @@
 var express = require('express');
 var app = express();
-var Promise = require('bluebird');
+var zr = require('./zkpromise');
 
 var cons = require('consolidate');
 
@@ -18,8 +18,6 @@ app.get('/api/configs', function(req, res) {
   }});
 });
 
-var Zookeeper = require('zookeeper');
-
 var url = require('./url.js');
 app.get('/api/*', function(req, res) {
   var path = req.param(0);
@@ -32,49 +30,16 @@ app.get('/api/*', function(req, res) {
 
   path = url.escape(path);
 
-  var zk = new Zookeeper({
-    connect: 'localhost:2181',
-    timeout: 2000
-  });
-
-  function connectAsync() {
-    return new Promise(function(resolve, reject) {
-      zk.connect(function(err) {
-        if (err) return reject(err);
-        resolve();
-      });
-    });
-  }
-
-  function getChildren2Async() {
-    return new Promise(function(resolve, reject) {
-      zk.a_get_children2('/' + path, null, function(rc, error, children, stat) {
-        if (rc === -101) {
-          reject({
-            code: rc,
-            error: error
-          });
-        }
-        else {
-          resolve({
-            children: children,
-            stat: stat
-          });
-        }
-      });
-    });
-  }
-
-  connectAsync().then(
-    getChildren2Async
-  ).then(function(data) {
+  new zr().get('/' + path)
+    .then(function(result) {
       res.json({
-        children: data.children,
-        stat: data.stat
-      });
-      res.status(200).end();
-      zk.close();
-  }).catch(function(err) {
+        children: result.children,
+        stat: result.stat,
+        data: result.data
+    });
+    res.status(200).end();
+  })
+  .catch(function(err) {
     res.status(404).json(err);
   });
 });
