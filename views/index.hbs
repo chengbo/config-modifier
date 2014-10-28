@@ -1,11 +1,28 @@
 <html>
   <head>
     <title>{{title}}</title>
-  <head>
-  <body>
-    Hi there, welcome to config modifier.
+    <style>
+      core-toolbar {
+        background-color: #ec802f;
+      }
+      paper-fab {
+        right: 50px;
+        bottom: 30px;
+        position: absolute;
+        z-index: 1;
+      }
+      dt, dd {
+        float: left;
+      }
+      dt {
+        clear: both;
+        width: 200px;
+      }
+    </style>
+  </head>
   <body>
         <h1>{{title}}</h1>
+
           <ul>
           {{#each children}}
             <li><a class="child" href="{{link}}">{{desc}}</a></li>
@@ -14,18 +31,18 @@
 
           <div class="value">value: {{data}}</div>
           <div class="stat">
-            <dl><dt>czxid</dt><dd>{{stat.czxid}}</dd></dl>
-            <dl><dt>mzxid</dt><dd>{{stat.mzxid}}</dd></dl>
-            <dl><dt>pzxid</dt><dd>{{stat.pzxid}}</dd></dl>
-            <dl><dt>dataLength</dt><dd>{{stat.dataLength}}</dd></dl>
-            <dl><dt>numChildren</dt><dd>{{stat.numChildren}}</dd></dl>
-            <dl><dt>version</dt><dd>{{stat.version}}</dd></dl>
-            <dl><dt>cversion</dt><dd>{{stat.cversion}}</dd></dl>
-            <dl><dt>aversion</dt><dd>{{stat.aversion}}</dd></dl>
-            <dl><dt>ctime</dt><dd>{{stat.ctime}}</dd></dl>
-            <dl><dt>mtime</dt><dd>{{stat.mtime}}</dd></dl>
-            <dl><dt>ephemeralOwner</dt><dd>{{stat.ephemeralOwner}}</dd></dl>
-            <dl><dt>createdInThisSession</dt><dd>{{stat.createdInThisSession}}</dd></dl>
+            <dl><dt>czxid</dt><dd>{{stat.czxid}}</dd>
+            <dt>mzxid</dt><dd>{{stat.mzxid}}</dd>
+            <dt>pzxid</dt><dd>{{stat.pzxid}}</dd>
+            <dt>dataLength</dt><dd>{{stat.dataLength}}</dd>
+            <dt>numChildren</dt><dd>{{stat.numChildren}}</dd>
+            <dt>version</dt><dd>{{stat.version}}</dd>
+            <dt>cversion</dt><dd>{{stat.cversion}}</dd>
+            <dt>aversion</dt><dd>{{stat.aversion}}</dd>
+            <dt>ctime</dt><dd>{{stat.ctime}}</dd>
+            <dt>mtime</dt><dd>{{stat.mtime}}</dd>
+            <dt>ephemeralOwner</dt><dd>{{stat.ephemeralOwner}}</dd>
+            <dt>createdInThisSession</dt><dd>{{stat.createdInThisSession}}</dd></dl>
           </div>
 
   </body>
