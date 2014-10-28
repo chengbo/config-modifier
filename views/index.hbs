@@ -12,9 +12,21 @@
           {{/each}}
           </ul>
 
-          value: {{data}}
-        </div>
-      </div>
+          <div class="value">value: {{data}}</div>
+          <div class="stat">
+            <dl><dt>czxid</dt><dd>{{stat.czxid}}</dd></dl>
+            <dl><dt>mzxid</dt><dd>{{stat.mzxid}}</dd></dl>
+            <dl><dt>pzxid</dt><dd>{{stat.pzxid}}</dd></dl>
+            <dl><dt>dataLength</dt><dd>{{stat.dataLength}}</dd></dl>
+            <dl><dt>numChildren</dt><dd>{{stat.numChildren}}</dd></dl>
+            <dl><dt>version</dt><dd>{{stat.version}}</dd></dl>
+            <dl><dt>cversion</dt><dd>{{stat.cversion}}</dd></dl>
+            <dl><dt>aversion</dt><dd>{{stat.aversion}}</dd></dl>
+            <dl><dt>ctime</dt><dd>{{stat.ctime}}</dd></dl>
+            <dl><dt>mtime</dt><dd>{{stat.mtime}}</dd></dl>
+            <dl><dt>ephemeralOwner</dt><dd>{{stat.ephemeralOwner}}</dd></dl>
+            <dl><dt>createdInThisSession</dt><dd>{{stat.createdInThisSession}}</dd></dl>
+          </div>
 
   </body>
 </html>
