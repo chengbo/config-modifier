@@ -56,7 +56,12 @@ app.get('/*', function(req, res) {
     .then(function(result) {
       res.render('index', {
         title: 'welcome to config modifier',
-        children: result.children,
+        children: result.children.map(function(x) {
+          return {
+            desc: x,
+            link: path.length == 0 ? x : '/' + path + '/' + x
+          }
+        }),
         stat: result.stat,
         data: result.data
       });
