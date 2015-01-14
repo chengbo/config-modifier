@@ -55,6 +55,24 @@ function get(path) {
   });
 }
 
+function set(path, data) {
+  var zk = this.zk;
+  return connect.call(this).then(function() {
+    return new Promise(function(resolve, reject) {
+      zk.a_set(path, data, -1, function(rc, error, stat) {
+        if (rc != 0) {
+          reject({
+            code: rc,
+            error: error
+          });
+        } else {
+          resolve({ stat: stat });
+        }
+      });
+    });
+  });
+}
+
 ZkWrapper.prototype.get = function(path) {
   var self = this;
   return connect.call(self).then(function() {
@@ -70,5 +88,7 @@ ZkWrapper.prototype.get = function(path) {
     };
   });
 };
+
+ZkWrapper.prototype.set = set;
 
 module.exports = ZkWrapper;

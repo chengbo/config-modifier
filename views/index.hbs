@@ -30,7 +30,8 @@
           </ul>
 
           <div class="value">value:
-            <input id="txtData" value="{{data}}">
+            <input id="value" value="{{data}}">
+            <input id="submit" type="button" value="Change">
           </div>
           <div class="stat">
             <dl><dt>czxid</dt><dd>{{stat.czxid}}</dd>
@@ -47,6 +48,20 @@
             <dt>createdInThisSession</dt><dd>{{stat.createdInThisSession}}</dd></dl>
           </div>
 
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+      $('#submit').click(function() {
+        var val = $('#value').val();
+        $.ajax({
+          type: 'put',
+          url: '/api' + location.pathname,
+          contentType: 'application/json',
+          data: JSON.stringify({ val: val }),
+          success: function(data) {
+            alert('znode updated successfully');
+          }
+        });
+      });
+    </script>
   </body>
 </html>
