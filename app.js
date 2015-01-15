@@ -50,13 +50,9 @@ app.get('/api/*', function(req, res) {
 app.put('/api/*', function(req, res) {
   var path = req.param(0);
 
-  if (path.length === 0) {
-    res.json({err: 'path is empty'});
-    res.status(400).end();
-    return;
+  if (path.length !== 0) {
+    path = url.escape(path);
   }
-
-  path = url.escape(path);
 
   var value = req.body.val;
   new zr().set('/' + path, value)
@@ -70,11 +66,9 @@ app.put('/api/*', function(req, res) {
 
 app.get('/*', function(req, res) {
   var path = req.param(0);
-  if (path.length === 0) {
-    path = '/';
+  if (path.length !== 0) {
+    path = url.escape(path);
   }
-
-  path = url.escape(path);
 
   new zr().get('/' + path)
     .then(function(result) {
