@@ -23,11 +23,16 @@
   <body>
         <h1>{{title}}</h1>
 
+        <div class="list">
           <ul>
           {{#each children}}
             <li><a class="child" href="{{link}}">{{desc}}</a></li>
           {{/each}}
           </ul>
+          <input id="new_child_name" placeholder="Child Name">
+          <input id="new_child_value" placeholder="Child Value (optional)">
+          <input id="add" type="button" value="Add New Child">
+        </div>
 
           <div class="value">value:
             <input id="value" value="{{data}}">
@@ -50,17 +55,29 @@
 
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script>
-      $('#submit').click(function() {
-        var val = $('#value').val();
+      function submitChanges(path, value) {
         $.ajax({
           type: 'put',
-          url: '/api' + location.pathname,
+          url: path,
           contentType: 'application/json',
-          data: JSON.stringify({ val: val }),
+          data: JSON.stringify({ val: value }),
           success: function(data) {
             alert('znode updated successfully');
+            location.reload();
           }
         });
+      }
+      $('#submit').click(function() {
+        var path = '/api' + location.pathname;
+        var val = $('#value').val();
+
+        submitChanges(path, val);
+      });
+      $('#add').click(function() {
+        var path = '/api/' + location.pathname + '/' + $('#new_child_name').val();
+        var val = $('#new_child_value').val();
+
+        submitChanges(path, val);
       });
     </script>
   </body>
